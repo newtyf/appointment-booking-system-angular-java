@@ -8,7 +8,7 @@ COPY frontend/ ./
 RUN npm run build
 
 # 2. Build backend
-FROM maven:3.9.11-eclipse-temurin-17 AS backend-build
+FROM maven:3.9.11-eclipse-temurin-21 AS backend-build
 WORKDIR /app/backend
 COPY backend/pom.xml ./
 RUN mvn dependency:go-offline
@@ -18,7 +18,7 @@ COPY --from=frontend-build /app/frontend/dist/monarca-frontend/browser ./src/mai
 RUN mvn clean package -DskipTests
 
 # 3. Runtime stage
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
 # Copy the JAR from build stage

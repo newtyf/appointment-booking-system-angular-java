@@ -11,7 +11,7 @@ Status: **COMPLETE**
 
 Successfully migrated the Monarca Appointment Booking System from:
 - **From:** FastAPI (Python) + React 19 + Vite
-- **To:** Spring Boot 3 (Java 17) + Angular 18 + Tailwind CSS
+- **To:** Spring Boot 3 (Java 21) + Angular 18 + Tailwind CSS
 
 All core functionality has been preserved and reimplemented using native Spring Boot and Angular patterns.
 
@@ -67,7 +67,7 @@ Basic structure implemented:
 ### Backend Architecture
 
 ```
-Spring Boot 3 + Java 17
+Spring Boot 3 + Java 21
 ├── Model Layer: JPA Entities (@Entity, @Table)
 ├── Repository Layer: Spring Data JPA (JpaRepository)
 ├── Service Layer: Business logic (@Service, @Transactional)

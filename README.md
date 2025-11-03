@@ -1,12 +1,12 @@
 # Monarca Appointment Booking System
 
-Sistema completo de reserva de citas para el salón de belleza Monarca, desarrollado con **Spring Boot 3** (Java 17) en el backend y **Angular 18** en el frontend.
+Sistema completo de reserva de citas para el salón de belleza Monarca, desarrollado con **Spring Boot 3** (Java 21) en el backend y **Angular 18** en el frontend.
 
 ## 🚀 Stack Tecnológico
 
 ### Backend
 - **Spring Boot 3.2.1** - Framework de aplicación Java
-- **Java 17** - Lenguaje de programación
+- **Java 21** - Lenguaje de programación
 - **Spring Data JPA** - Acceso a datos con Hibernate
 - **Spring Security** - Autenticación y autorización con JWT
 - **MySQL 8.0** - Base de datos relacional
@@ -49,7 +49,7 @@ Sistema completo de reserva de citas para el salón de belleza Monarca, desarrol
 
 ```
 appointment-booking-system-angular-java/
-├── backend/                         # Spring Boot 3 + Java 17
+├── backend/                         # Spring Boot 3 + Java 21
 │   ├── src/main/java/com/monarca/appointments/
 │   │   ├── controller/              # REST Controllers
 │   │   ├── service/                 # Lógica de negocio
@@ -75,7 +75,7 @@ appointment-booking-system-angular-java/
 ## 🚀 Inicio Rápido
 
 ### Pre-requisitos
-- Java 17 (JDK)
+- Java 21 (JDK)
 - Node.js 20+
 - MySQL 8.0+
 - Maven 3.9+ (opcional, se incluye wrapper)
@@ -241,6 +241,6 @@ Este proyecto es privado y pertenece a Monarca Beauty Salon.
 
 ## 👥 Equipo de Desarrollo
 
-- Backend: Spring Boot 3 + Java 17
+- Backend: Spring Boot 3 + Java 21
 - Frontend: Angular 18 + Tailwind CSS
 - Base de Datos: MySQL 8.0

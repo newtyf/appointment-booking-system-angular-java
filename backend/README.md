@@ -2,13 +2,13 @@
 
 ## Project Setup
 
-Este documento proporciona instrucciones para configurar y ejecutar el backend del Appointment Booking System con Spring Boot 3 y Java 17.
+Este documento proporciona instrucciones para configurar y ejecutar el backend del Appointment Booking System con Spring Boot 3 y Java 21.
 
 ### Pre-requisitos
 
 Asegúrate de tener instalado en tu sistema:
 
-- Java 17 o superior (JDK)
+- Java 21 (JDK)
 - Maven 3.6+ (incluido en el wrapper)
 - MySQL Server 8.0+
 
