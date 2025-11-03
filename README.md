@@ -245,12 +245,6 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 CULQI_SECRET_KEY=sk_test_tu_clave_culqi
 CULQI_API_URL=https://api.culqi.com/v2
 
-# Email (Gmail)
-EMAIL_SENDER=tu_correo@gmail.com
-EMAIL_PASSWORD=tu_app_password
-SMTP_SERVER=smtp.gmail.com
-SMTP_PORT=587
-
 # Replicate (IA)
 REPLICATE_API_TOKEN=tu_token_replicate
 ```
