@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: monarca-appointments
+  
+  datasource:
+    url: jdbc:mysql://${MYSQL_DB_HOST:localhost}:${MYSQL_DB_PORT:3306}/${MYSQL_DB_NAME:appointments_db}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${MYSQL_DB_USER:root}
+    password: ${MYSQL_DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: ${SHOW_SQL:false}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        use_sql_comments: true
+  
+  mail:
+    host: ${SMTP_SERVER:smtp.gmail.com}
+    port: ${SMTP_PORT:587}
+    username: ${EMAIL_SENDER:}
+    password: ${EMAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          timeout: 5000
+          connectiontimeout: 5000
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# JWT Configuration
+jwt:
+  secret: ${SECRET_KEY:your-secret-key-change-this-in-production}
+  expiration: ${ACCESS_TOKEN_EXPIRE_MINUTES:1440}
+
+# Culqi Configuration
+culqi:
+  secret-key: ${CULQI_SECRET_KEY:sk_test_your_secret_key_here}
+  api-url: ${CULQI_API_URL:https://api.culqi.com/v2}
+
+# Replicate Configuration
+replicate:
+  api-token: ${REPLICATE_API_TOKEN:}
+  model-version: 12b5a5a61e3419f792eb56cfc16eed046252740ebf5d470228f9b4cf2c861610
+
+# API Configuration
+api:
+  prefix: ${API_PREFIX:/api}
+
+# Logging
+logging:
+  level:
+    com.monarca: ${LOG_LEVEL:INFO}
+    org.springframework.security: ${LOG_LEVEL:INFO}
+    org.hibernate.SQL: ${SQL_LOG_LEVEL:WARN}
