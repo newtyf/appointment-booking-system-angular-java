@@ -1,85 +1,27 @@
-# Appointment Booking System - Frontend
+# MonarcaFrontend
 
-Este proyecto es la interfaz de usuario (frontend) de un sistema de reservas de citas para **Monarca**, un salón de belleza. Está desarrollado con React y Vite, y permite a los usuarios gestionar y reservar citas de manera sencilla y eficiente.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
 
-## 🚀 ¿Qué es este proyecto?
+## Development server
 
-Una SPA (Single Page Application) moderna para la gestión de reservas, con autenticación, panel de usuario y diseño responsivo usando Tailwind CSS.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## 🛠️ Tecnologías principales
-- [React](https://react.dev/)
-- [Vite](https://vitejs.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
+## Code scaffolding
 
-## 📦 Estructura de carpetas
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-```
-frontend/
-├── public/              # Archivos estáticos (imágenes, favicon, etc.)
-├── src/
-│   ├── assets/          # Recursos estáticos (imágenes, íconos)
-│   ├── components/      # Componentes reutilizables (Button, etc.)
-│   ├── layouts/         # Layouts generales de la app
-│   ├── pages/           # Páginas principales (Home, Login, etc.)
-│   ├── routes/          # Definición de rutas de la app
-│   ├── services/        # Lógica de conexión con APIs
-│   ├── App.jsx          # Componente raíz
-│   └── main.jsx         # Punto de entrada de la app
-├── package.json         # Dependencias y scripts
-└── vite.config.js       # Configuración de Vite
-```
+## Build
 
-## ▶️ Cómo levantar el proyecto
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-1. Instala las dependencias:
-   ```bash
-   npm install
-   ```
-2. Inicia el servidor de desarrollo:
-   ```bash
-   npm run dev
-   ```
-3. Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
+## Running unit tests
 
-## 🤝 Cómo contribuir
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-Este es un proyecto privado. Si eres parte del equipo de desarrollo, sigue estas indicaciones para contribuir:
+## Running end-to-end tests
 
-1. Crea una nueva rama a partir de `develop` para tu feature o fix:
-   ```bash
-   git checkout develop
-   git pull
-   git checkout -b feature/mi-nueva-feature
-   ```
-2. Realiza tus cambios y haz commits siguiendo [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/):
-   ```bash
-   git commit -m "feat: agrega botón de reserva"
-   ```
-3. Sube tu rama al repositorio remoto:
-   ```bash
-   git push origin feature/mi-nueva-feature
-   ```
-4. Abre un Pull Request hacia la rama `develop` y describe tus cambios.
-5. Espera revisión y aprobación antes de hacer merge.
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-### Flujo de trabajo
-- Trabajamos con [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/):
-  - Usa ramas `feature/`, `fix/`, `release/`, `hotfix/` según corresponda.
-  - Los merges a `main` solo se hacen desde `develop` en releases.
-- Los mensajes de commit deben seguir la convención [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/).
+## Further help
 
-## 📄 Convenciones
-
-- **Git Flow:**
-  - `main`: rama de producción
-  - `develop`: rama de desarrollo
-  - `feature/*`, `fix/*`, `release/*`, `hotfix/*`: ramas de trabajo
-- **Commits:** Usa [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/) para mensajes claros y automáticos en el changelog.
-
-## 📬 Contacto
-
-Para dudas o sugerencias, abre un issue o contacta al equipo de desarrollo.
-
----
-
-¡Gracias por contribuir y usar Appointment Booking System!
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
