@@ -1,12 +1,11 @@
 package com.monarca.appointments.controller;
 
-import com.monarca.appointments.dto.AuthResponse;
-import com.monarca.appointments.dto.LoginRequest;
-import com.monarca.appointments.dto.RegisterRequest;
+import com.monarca.appointments.model.User;
 import com.monarca.appointments.service.AuthService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("${api.prefix}/auth")
@@ -19,12 +18,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authService.register(request));
+    public ResponseEntity<Map<String, Object>> register(@RequestBody User user) {
+        return ResponseEntity.ok(authService.register(user));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authService.login(request));
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> loginData) {
+        return ResponseEntity.ok(authService.login(loginData.get("email"), loginData.get("password")));
     }
 }

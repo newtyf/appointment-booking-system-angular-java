@@ -1,8 +1,5 @@
 package com.monarca.appointments.service;
 
-import com.monarca.appointments.dto.AppointmentCreateRequest;
-import com.monarca.appointments.dto.AppointmentResponse;
-import com.monarca.appointments.dto.AppointmentUpdateRequest;
 import com.monarca.appointments.exception.BadRequestException;
 import com.monarca.appointments.exception.ResourceNotFoundException;
 import com.monarca.appointments.model.Appointment;
@@ -67,102 +64,85 @@ public class AppointmentService {
         }
     }
 
-    public List<AppointmentResponse> listAllAppointments() {
-        return appointmentRepository.findAll().stream()
-                .map(this::toResponse)
-                .collect(Collectors.toList());
+    public List<Appointment> listAllAppointments() {
+        return appointmentRepository.findAll();
     }
 
-    public AppointmentResponse getAppointmentById(Long id) {
-        Appointment appointment = appointmentRepository.findById(id)
+    public Appointment getAppointmentById(Long id) {
+        return appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cita no encontrada"));
-        return toResponse(appointment);
     }
 
-    public List<AppointmentResponse> getAppointmentsByClient(Long clientId) {
-        return appointmentRepository.findByClientId(clientId).stream()
-                .map(this::toResponse)
-                .collect(Collectors.toList());
+    public List<Appointment> getAppointmentsByClient(Long clientId) {
+        return appointmentRepository.findByClientId(clientId);
     }
 
-    public List<AppointmentResponse> getAppointmentsByStylist(Long stylistId) {
-        return appointmentRepository.findByStylistId(stylistId).stream()
-                .map(this::toResponse)
-                .collect(Collectors.toList());
+    public List<Appointment> getAppointmentsByStylist(Long stylistId) {
+        return appointmentRepository.findByStylistId(stylistId);
     }
 
     @Transactional
-    public AppointmentResponse createAppointment(AppointmentCreateRequest request, Long createdBy) {
+    public Appointment createAppointment(Appointment appointment, Long createdBy) {
         // Validar datos de cliente
-        if (request.getIsWalkIn()) {
-            if (request.getClientName() == null || request.getClientPhone() == null) {
+        if (appointment.getIsWalkIn()) {
+            if (appointment.getClientName() == null || appointment.getClientPhone() == null) {
                 throw new BadRequestException("Se requiere nombre y teléfono para clientes walk-in");
             }
         } else {
-            if (request.getClientId() == null) {
+            if (appointment.getClientId() == null) {
                 throw new BadRequestException("Se requiere ID de cliente para citas registradas");
             }
         }
 
         // Validar fecha y hora
-        validateDateTime(request.getDate());
+        validateDateTime(appointment.getDate());
 
         // Verificar disponibilidad del estilista
-        checkStylistAvailability(request.getStylistId(), request.getDate(), request.getServiceId(), null);
+        checkStylistAvailability(appointment.getStylistId(), appointment.getDate(), appointment.getServiceId(), null);
 
-        // Crear cita
-        Appointment appointment = new Appointment();
-        appointment.setClientId(request.getClientId());
-        appointment.setClientName(request.getClientName());
-        appointment.setClientPhone(request.getClientPhone());
-        appointment.setClientEmail(request.getClientEmail());
-        appointment.setIsWalkIn(request.getIsWalkIn());
-        appointment.setStylistId(request.getStylistId());
-        appointment.setServiceId(request.getServiceId());
-        appointment.setDate(request.getDate());
-        appointment.setStatus(request.getStatus() != null ? request.getStatus() : "pending");
+        // Establecer campos de auditoría
+        if (appointment.getStatus() == null) {
+            appointment.setStatus("pending");
+        }
         appointment.setCreatedBy(createdBy);
         appointment.setModifiedBy(createdBy);
 
-        appointment = appointmentRepository.save(appointment);
-        return toResponse(appointment);
+        return appointmentRepository.save(appointment);
     }
 
     @Transactional
-    public AppointmentResponse updateAppointment(Long id, AppointmentUpdateRequest request, Long modifiedBy) {
+    public Appointment updateAppointment(Long id, Appointment updatedAppointment, Long modifiedBy) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cita no encontrada"));
 
-        if (request.getDate() != null) {
-            validateDateTime(request.getDate());
+        if (updatedAppointment.getDate() != null) {
+            validateDateTime(updatedAppointment.getDate());
             
-            Long serviceId = request.getServiceId() != null ? request.getServiceId() : appointment.getServiceId();
-            Long stylistId = request.getStylistId() != null ? request.getStylistId() : appointment.getStylistId();
+            Long serviceId = updatedAppointment.getServiceId() != null ? updatedAppointment.getServiceId() : appointment.getServiceId();
+            Long stylistId = updatedAppointment.getStylistId() != null ? updatedAppointment.getStylistId() : appointment.getStylistId();
             
-            checkStylistAvailability(stylistId, request.getDate(), serviceId, id);
-            appointment.setDate(request.getDate());
+            checkStylistAvailability(stylistId, updatedAppointment.getDate(), serviceId, id);
+            appointment.setDate(updatedAppointment.getDate());
         }
 
-        if (request.getStylistId() != null) {
-            LocalDateTime date = request.getDate() != null ? request.getDate() : appointment.getDate();
-            Long serviceId = request.getServiceId() != null ? request.getServiceId() : appointment.getServiceId();
+        if (updatedAppointment.getStylistId() != null) {
+            LocalDateTime date = updatedAppointment.getDate() != null ? updatedAppointment.getDate() : appointment.getDate();
+            Long serviceId = updatedAppointment.getServiceId() != null ? updatedAppointment.getServiceId() : appointment.getServiceId();
             
-            checkStylistAvailability(request.getStylistId(), date, serviceId, id);
-            appointment.setStylistId(request.getStylistId());
+            checkStylistAvailability(updatedAppointment.getStylistId(), date, serviceId, id);
+            appointment.setStylistId(updatedAppointment.getStylistId());
         }
 
-        if (request.getServiceId() != null) {
-            appointment.setServiceId(request.getServiceId());
+        if (updatedAppointment.getServiceId() != null) {
+            appointment.setServiceId(updatedAppointment.getServiceId());
         }
 
-        if (request.getStatus() != null) {
-            appointment.setStatus(request.getStatus());
+        if (updatedAppointment.getStatus() != null) {
+            appointment.setStatus(updatedAppointment.getStatus());
         }
 
         appointment.setModifiedBy(modifiedBy);
-        appointment = appointmentRepository.save(appointment);
-        
-        return toResponse(appointment);
+        return appointmentRepository.save(appointment);
     }
 
     @Transactional
@@ -171,24 +151,5 @@ public class AppointmentService {
             throw new ResourceNotFoundException("Cita no encontrada");
         }
         appointmentRepository.deleteById(id);
-    }
-
-    private AppointmentResponse toResponse(Appointment appointment) {
-        return new AppointmentResponse(
-                appointment.getId(),
-                appointment.getClientId(),
-                appointment.getClientName(),
-                appointment.getClientPhone(),
-                appointment.getClientEmail(),
-                appointment.getIsWalkIn(),
-                appointment.getStylistId(),
-                appointment.getServiceId(),
-                appointment.getDate(),
-                appointment.getStatus(),
-                appointment.getCreatedBy(),
-                appointment.getModifiedBy(),
-                appointment.getCreatedAt(),
-                appointment.getUpdatedAt()
-        );
     }
 }

@@ -1,6 +1,6 @@
 package com.monarca.appointments.controller;
 
-import com.monarca.appointments.dto.UserResponse;
+import com.monarca.appointments.model.User;
 import com.monarca.appointments.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,19 +20,19 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST')")
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
+    public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST', 'STYLIST', 'CLIENT')")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping("/role/{role}")
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST')")
-    public ResponseEntity<List<UserResponse>> getUsersByRole(@PathVariable String role) {
+    public ResponseEntity<List<User>> getUsersByRole(@PathVariable String role) {
         return ResponseEntity.ok(userService.getUsersByRole(role));
     }
 }
