@@ -1,5 +1,6 @@
 package com.monarca.appointments.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class User {
     private String phone;
 
     @Column(name = "hashed_password", nullable = false, length = 100)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String hashedPassword;
 
     @Column(name = "role", nullable = false, length = 20)

@@ -1,11 +1,8 @@
 package com.monarca.appointments.controller;
 
-import com.monarca.appointments.dto.AppointmentCreateRequest;
-import com.monarca.appointments.dto.AppointmentResponse;
-import com.monarca.appointments.dto.AppointmentUpdateRequest;
+import com.monarca.appointments.model.Appointment;
 import com.monarca.appointments.service.AppointmentService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,46 +22,46 @@ public class AppointmentController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST')")
-    public ResponseEntity<List<AppointmentResponse>> listAllAppointments() {
+    public ResponseEntity<List<Appointment>> listAllAppointments() {
         return ResponseEntity.ok(appointmentService.listAllAppointments());
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST', 'STYLIST', 'CLIENT')")
-    public ResponseEntity<AppointmentResponse> getAppointment(@PathVariable Long id) {
+    public ResponseEntity<Appointment> getAppointment(@PathVariable Long id) {
         return ResponseEntity.ok(appointmentService.getAppointmentById(id));
     }
 
     @GetMapping("/client/{clientId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST', 'CLIENT')")
-    public ResponseEntity<List<AppointmentResponse>> getAppointmentsByClient(@PathVariable Long clientId) {
+    public ResponseEntity<List<Appointment>> getAppointmentsByClient(@PathVariable Long clientId) {
         return ResponseEntity.ok(appointmentService.getAppointmentsByClient(clientId));
     }
 
     @GetMapping("/stylist/{stylistId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST', 'STYLIST')")
-    public ResponseEntity<List<AppointmentResponse>> getAppointmentsByStylist(@PathVariable Long stylistId) {
+    public ResponseEntity<List<Appointment>> getAppointmentsByStylist(@PathVariable Long stylistId) {
         return ResponseEntity.ok(appointmentService.getAppointmentsByStylist(stylistId));
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST', 'CLIENT')")
-    public ResponseEntity<AppointmentResponse> createAppointment(
-            @Valid @RequestBody AppointmentCreateRequest request,
+    public ResponseEntity<Appointment> createAppointment(
+            @RequestBody Appointment appointment,
             HttpServletRequest httpRequest) {
         Long userId = (Long) httpRequest.getAttribute("userId");
-        AppointmentResponse response = appointmentService.createAppointment(request, userId);
+        Appointment response = appointmentService.createAppointment(appointment, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST')")
-    public ResponseEntity<AppointmentResponse> updateAppointment(
+    public ResponseEntity<Appointment> updateAppointment(
             @PathVariable Long id,
-            @Valid @RequestBody AppointmentUpdateRequest request,
+            @RequestBody Appointment appointment,
             HttpServletRequest httpRequest) {
         Long userId = (Long) httpRequest.getAttribute("userId");
-        return ResponseEntity.ok(appointmentService.updateAppointment(id, request, userId));
+        return ResponseEntity.ok(appointmentService.updateAppointment(id, appointment, userId));
     }
 
     @DeleteMapping("/{id}")
