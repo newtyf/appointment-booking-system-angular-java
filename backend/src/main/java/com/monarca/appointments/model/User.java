@@ -25,8 +25,12 @@ public class User {
     private String phone;
 
     @Column(name = "hashed_password", nullable = false, length = 100)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(value = "hashed_password", access = JsonProperty.Access.READ_ONLY)
     private String hashedPassword;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     @Column(name = "role", nullable = false, length = 20)
     private String role = "client";
@@ -93,6 +97,14 @@ public class User {
 
     public void setHashedPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getRole() {
