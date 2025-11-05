@@ -1,17 +1,11 @@
 package com.monarca.appointments.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reminders")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Reminder {
 
     @Id
@@ -26,4 +20,46 @@ public class Reminder {
 
     @Column(name = "sent_at", nullable = false)
     private LocalDateTime sentAt;
+
+    public Reminder() {
+    }
+
+    public Reminder(Long id, Long appointmentId, Boolean sent, LocalDateTime sentAt) {
+        this.id = id;
+        this.appointmentId = appointmentId;
+        this.sent = sent;
+        this.sentAt = sentAt;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(Long appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public Boolean getSent() {
+        return sent;
+    }
+
+    public void setSent(Boolean sent) {
+        this.sent = sent;
+    }
+
+    public LocalDateTime getSentAt() {
+        return sentAt;
+    }
+
+    public void setSentAt(LocalDateTime sentAt) {
+        this.sentAt = sentAt;
+    }
 }

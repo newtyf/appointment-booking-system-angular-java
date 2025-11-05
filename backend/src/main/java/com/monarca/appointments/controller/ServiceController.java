@@ -4,7 +4,6 @@ import com.monarca.appointments.model.Service;
 import com.monarca.appointments.service.ServiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,19 +29,16 @@ public class ServiceController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Service> createService(@RequestBody Service service) {
         return ResponseEntity.status(HttpStatus.CREATED).body(serviceService.createService(service));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Service> updateService(@PathVariable Long id, @RequestBody Service service) {
         return ResponseEntity.ok(serviceService.updateService(id, service));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteService(@PathVariable Long id) {
         serviceService.deleteService(id);
         return ResponseEntity.noContent().build();
