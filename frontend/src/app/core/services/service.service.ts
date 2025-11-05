@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Service } from '../../shared/models/service.model';
+import { Service, ServiceCreateRequest, ServiceUpdateRequest } from '../../shared/models/service.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +20,11 @@ export class ServiceService {
     return this.http.get<Service>(`${this.apiUrl}/${id}`);
   }
 
-  createService(service: Service): Observable<Service> {
+  createService(service: ServiceCreateRequest): Observable<Service> {
     return this.http.post<Service>(this.apiUrl, service);
   }
 
-  updateService(id: number, service: Service): Observable<Service> {
+  updateService(id: number, service: ServiceUpdateRequest): Observable<Service> {
     return this.http.put<Service>(`${this.apiUrl}/${id}`, service);
   }
 
