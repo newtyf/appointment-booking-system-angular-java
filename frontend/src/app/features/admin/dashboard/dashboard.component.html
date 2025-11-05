@@ -1,8 +1,16 @@
-<div class="container mx-auto p-6 space-y-6">
+<app-loading-spinner *ngIf="loading" [fullScreen]="true" message="Cargando dashboard..."></app-loading-spinner>
+
+<div *ngIf="!loading" class="space-y-6">
   <!-- Header -->
   <div class="bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg shadow-lg p-8 text-white">
     <h1 class="text-4xl font-bold mb-2">Panel de Administración 👑</h1>
     <p class="text-pink-100 text-lg">Gestiona todo el sistema Monarca</p>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+    <span class="block sm:inline">{{ error }}</span>
+    <button (click)="loadDashboardData()" class="ml-4 underline cursor-pointer">Reintentar</button>
   </div>
 
   <!-- Stats Cards -->
@@ -12,7 +20,7 @@
       <div class="flex items-center justify-between">
         <div>
           <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Citas Totales</p>
-          <p class="mt-2 text-3xl font-bold text-gray-900">-</p>
+          <p class="mt-2 text-3xl font-bold text-gray-900">{{ dashboardData?.appointmentsStats?.total || 0 }}</p>
         </div>
         <div class="p-3 bg-pink-100 rounded-full">
           <svg class="h-8 w-8 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,7 +35,7 @@
       <div class="flex items-center justify-between">
         <div>
           <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Clientes</p>
-          <p class="mt-2 text-3xl font-bold text-gray-900">-</p>
+          <p class="mt-2 text-3xl font-bold text-gray-900">{{ dashboardData?.totalClients || 0 }}</p>
         </div>
         <div class="p-3 bg-purple-100 rounded-full">
           <svg class="h-8 w-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,27 +45,27 @@
       </div>
     </div>
 
-    <!-- Total Services -->
+    <!-- Pending Appointments -->
     <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-600">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Servicios</p>
-          <p class="mt-2 text-3xl font-bold text-gray-900">-</p>
+          <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Pendientes</p>
+          <p class="mt-2 text-3xl font-bold text-gray-900">{{ dashboardData?.appointmentsStats?.pending || 0 }}</p>
         </div>
         <div class="p-3 bg-blue-100 rounded-full">
           <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
       </div>
     </div>
 
-    <!-- Total Employees -->
+    <!-- Total Stylists -->
     <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-600">
       <div class="flex items-center justify-between">
         <div>
-          <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Empleados</p>
-          <p class="mt-2 text-3xl font-bold text-gray-900">-</p>
+          <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Estilistas</p>
+          <p class="mt-2 text-3xl font-bold text-gray-900">{{ dashboardData?.totalStylists || 0 }}</p>
         </div>
         <div class="p-3 bg-green-100 rounded-full">
           <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,47 +76,57 @@
     </div>
   </div>
 
-  <!-- Quick Actions -->
+  <!-- Appointment Status Breakdown -->
   <div class="bg-white rounded-lg shadow-md p-6">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-      <svg class="h-7 w-7 mr-2 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-      Gestión Rápida
-    </h2>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      <button class="cursor-pointer px-6 py-4 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors duration-200 flex items-center justify-center space-x-2">
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-        <span>Citas</span>
-      </button>
-      <button class="cursor-pointer px-6 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200 flex items-center justify-center space-x-2">
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-        <span>Clientes</span>
-      </button>
-      <button class="cursor-pointer px-6 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2">
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-        <span>Empleados</span>
-      </button>
-      <button class="cursor-pointer px-6 py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-center space-x-2">
-        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-        </svg>
-        <span>Servicios</span>
-      </button>
+    <h2 class="text-xl font-bold text-gray-900 mb-4">Estado de Citas</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="text-center p-4 bg-yellow-50 rounded-lg">
+        <p class="text-2xl font-bold text-yellow-600">{{ dashboardData?.appointmentsStats?.pending || 0 }}</p>
+        <p class="text-sm text-gray-600">Pendientes</p>
+      </div>
+      <div class="text-center p-4 bg-blue-50 rounded-lg">
+        <p class="text-2xl font-bold text-blue-600">{{ dashboardData?.appointmentsStats?.confirmed || 0 }}</p>
+        <p class="text-sm text-gray-600">Confirmadas</p>
+      </div>
+      <div class="text-center p-4 bg-green-50 rounded-lg">
+        <p class="text-2xl font-bold text-green-600">{{ dashboardData?.appointmentsStats?.completed || 0 }}</p>
+        <p class="text-sm text-gray-600">Completadas</p>
+      </div>
+      <div class="text-center p-4 bg-red-50 rounded-lg">
+        <p class="text-2xl font-bold text-red-600">{{ dashboardData?.appointmentsStats?.cancelled || 0 }}</p>
+        <p class="text-sm text-gray-600">Canceladas</p>
+      </div>
     </div>
   </div>
 
-  <!-- Logout Button -->
-  <div class="flex justify-end">
-    <button (click)="logout()" class="cursor-pointer px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200">
-      Cerrar Sesión
-    </button>
+  <!-- Top Stylists and Services -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Top Stylists -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">Top Estilistas</h2>
+      <div class="space-y-3">
+        <div *ngFor="let stylist of dashboardData?.topStylists" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+          <span class="font-medium text-gray-900">{{ stylist.name }}</span>
+          <span class="text-sm text-gray-600">{{ stylist.appointmentsCount }} citas</span>
+        </div>
+        <p *ngIf="!dashboardData?.topStylists || dashboardData?.topStylists?.length === 0" class="text-gray-500 text-center py-4">
+          No hay datos disponibles
+        </p>
+      </div>
+    </div>
+
+    <!-- Top Services -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">Servicios Populares</h2>
+      <div class="space-y-3">
+        <div *ngFor="let service of dashboardData?.topServices" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+          <span class="font-medium text-gray-900">{{ service.name }}</span>
+          <span class="text-sm text-gray-600">{{ service.bookingsCount }} reservas</span>
+        </div>
+        <p *ngIf="!dashboardData?.topServices || dashboardData?.topServices?.length === 0" class="text-gray-500 text-center py-4">
+          No hay datos disponibles
+        </p>
+      </div>
+    </div>
   </div>
 </div>
