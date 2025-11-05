@@ -50,10 +50,6 @@ interface NavItem {
           routerLinkActive="bg-gradient-to-r from-pink-600 to-purple-600 text-white"
           [routerLinkActiveOptions]="{exact: true}"
           class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 hover:bg-gray-100 text-gray-700 hover:text-gray-900 cursor-pointer"
-          [class.bg-gradient-to-r]="isActiveRoute(item.path)"
-          [class.from-pink-600]="isActiveRoute(item.path)"
-          [class.to-purple-600]="isActiveRoute(item.path)"
-          [class.text-white]="isActiveRoute(item.path)"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" [attr.d]="item.icon" />
@@ -133,10 +129,6 @@ export class SidebarComponent {
       .join('')
       .toUpperCase()
       .substring(0, 2);
-  }
-
-  isActiveRoute(path: string): boolean {
-    return this.router.url === path;
   }
 
   logout(): void {

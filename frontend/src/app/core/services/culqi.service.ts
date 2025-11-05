@@ -72,25 +72,34 @@ export class CulqiService {
         originalOpen.call(window.Culqi);
       };
 
-      // Set success callback
+      // Set success callback (cleanup after use to prevent memory leaks)
       window.culqi = function() {
-        if (window.Culqi.token) {
-          const token: CulqiToken = {
-            id: window.Culqi.token.id,
-            type: window.Culqi.token.type,
-            email: window.Culqi.token.email,
-            card_number: window.Culqi.token.card_number,
-            creation_date: window.Culqi.token.creation_date
-          };
-          config.onSuccess(token);
-        } else if (window.Culqi.error) {
-          config.onError(window.Culqi.error);
+        try {
+          if (window.Culqi.token) {
+            const token: CulqiToken = {
+              id: window.Culqi.token.id,
+              type: window.Culqi.token.type,
+              email: window.Culqi.token.email,
+              card_number: window.Culqi.token.card_number,
+              creation_date: window.Culqi.token.creation_date
+            };
+            config.onSuccess(token);
+          } else if (window.Culqi.error) {
+            config.onError(window.Culqi.error);
+          }
+        } finally {
+          // Cleanup global function to prevent memory leaks
+          delete window.culqi;
         }
       };
 
       window.Culqi.open();
     } catch (error) {
       config.onError(error);
+      // Cleanup on error as well
+      if (window.culqi) {
+        delete window.culqi;
+      }
     }
   }
 }

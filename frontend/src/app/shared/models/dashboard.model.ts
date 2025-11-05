@@ -1,3 +1,5 @@
+import { Appointment } from './appointment.model';
+
 export interface AdminDashboard {
   appointmentsStats: {
     total: number;
@@ -18,12 +20,12 @@ export interface AdminDashboard {
     name: string;
     bookingsCount: number;
   }>;
-  recentAppointments: any[];
+  recentAppointments: Appointment[];
 }
 
 export interface ReceptionistDashboard {
-  appointmentsToday: any[];
-  pendingConfirmations: any[];
+  appointmentsToday: Appointment[];
+  pendingConfirmations: Appointment[];
   stylistsAvailability: Array<{
     id: number;
     name: string;
@@ -32,15 +34,15 @@ export interface ReceptionistDashboard {
 }
 
 export interface StylistDashboard {
-  nextAppointment: any;
-  appointmentsToday: any[];
-  appointmentsUpcoming: any[];
+  nextAppointment: Appointment | null;
+  appointmentsToday: Appointment[];
+  appointmentsUpcoming: Appointment[];
   totalCompletedThisMonth: number;
 }
 
 export interface ClientDashboard {
-  upcomingAppointments: any[];
-  pastAppointments: any[];
+  upcomingAppointments: Appointment[];
+  pastAppointments: Appointment[];
   totalAppointments: number;
   favoriteService: {
     id: number;
