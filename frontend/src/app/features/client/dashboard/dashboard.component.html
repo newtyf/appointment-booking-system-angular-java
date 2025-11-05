@@ -1,11 +1,97 @@
-<div class="min-h-screen bg-gray-100 p-8">
-  <div class="max-w-7xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6">Client Dashboard - Monarca</h1>
-    <div class="bg-white rounded-lg shadow p-6">
-      <p>Welcome! You can manage your appointments here.</p>
-      <button (click)="logout()" class="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-        Cerrar Sesión
+<div class="container mx-auto p-6 space-y-6">
+  <!-- Header -->
+  <div class="bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg shadow-lg p-8 text-white">
+    <h1 class="text-4xl font-bold mb-2">¡Hola! 👋</h1>
+    <p class="text-pink-100 text-lg">Bienvenido a tu panel de cliente</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Total de Citas -->
+    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-pink-600">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Total de Citas</p>
+          <p class="mt-2 text-3xl font-bold text-gray-900">-</p>
+        </div>
+        <div class="p-3 bg-pink-100 rounded-full">
+          <svg class="h-8 w-8 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Citas Próximas -->
+    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-600">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Citas Próximas</p>
+          <p class="mt-2 text-3xl font-bold text-gray-900">-</p>
+        </div>
+        <div class="p-3 bg-purple-100 rounded-full">
+          <svg class="h-8 w-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Citas Completadas -->
+    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-600">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-gray-600 uppercase tracking-wider">Completadas</p>
+          <p class="mt-2 text-3xl font-bold text-gray-900">-</p>
+        </div>
+        <div class="p-3 bg-green-100 rounded-full">
+          <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+      <svg class="h-7 w-7 mr-2 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+      Acciones Rápidas
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <button class="cursor-pointer px-6 py-4 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors duration-200 flex items-center justify-center space-x-2">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+        <span>Agendar Nueva Cita</span>
+      </button>
+      <button class="cursor-pointer px-6 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200 flex items-center justify-center space-x-2">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Ver Historial</span>
       </button>
     </div>
+  </div>
+
+  <!-- Próximas Citas -->
+  <div class="bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+      <svg class="h-7 w-7 mr-2 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+      Tus Próximas Citas
+    </h2>
+    <p class="text-gray-600">No tienes citas programadas. ¡Agenda tu primera cita ahora!</p>
+  </div>
+
+  <!-- Logout Button -->
+  <div class="flex justify-end">
+    <button (click)="logout()" class="cursor-pointer px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200">
+      Cerrar Sesión
+    </button>
   </div>
 </div>
