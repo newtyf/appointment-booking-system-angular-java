@@ -72,7 +72,7 @@ public class AppointmentController {
         return ResponseEntity.ok(appointment);
     }
 
-    @PostMapping("/")
+    @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'RECEPTIONIST')")
     public ResponseEntity<Appointment> createAppointment(
             @RequestBody Appointment appointment,
