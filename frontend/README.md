@@ -1,27 +1,94 @@
-# MonarcaFrontend
+# Monarca Frontend - Angular 18
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
+Modern Angular 18 frontend for the Monarca Beauty Salon appointment booking system.
 
-## Development server
+## 🚀 Technology Stack
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Angular 18.2** - Modern web framework with standalone components
+- **TypeScript 5.5** - Type-safe development
+- **Tailwind CSS 3.4** - Utility-first CSS framework
+- **RxJS 7.8** - Reactive programming
+- **Angular Router** - Client-side routing with lazy loading
 
-## Code scaffolding
+## 📋 Prerequisites
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Node.js** 20.x or higher
+- **npm** 10.x or higher
+- **Angular CLI** 18.x (optional, but recommended)
 
-## Build
+```bash
+# Install Angular CLI globally (optional)
+npm install -g @angular/cli
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🛠️ Installation
 
-## Running unit tests
+```bash
+# Install dependencies
+npm install
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Note: Use --legacy-peer-deps if you encounter peer dependency issues
+npm install --legacy-peer-deps
+```
 
-## Running end-to-end tests
+## 🏃 Development
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Start Development Server
 
-## Further help
+```bash
+# Using npm script
+npm start
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+# Or using Angular CLI
+ng serve
+
+# With custom port
+ng serve --port 4201
+```
+
+The application will be available at `http://localhost:4200/`
+
+## 🏗️ Build
+
+### Production Build
+
+```bash
+# Optimized build for production
+npm run build
+
+# Output will be in dist/monarca-frontend/browser/
+```
+
+The production build includes AOT compilation, tree shaking, minification and optimization.
+
+## 📁 Key Directories
+
+```
+src/app/
+├── core/                    # Services, guards, interceptors
+├── features/                # Feature pages (lazy-loaded)
+├── shared/                  # Shared components and models
+└── environments/            # Environment configurations
+```
+
+## 🔐 Environment Configuration
+
+Update `src/environments/environment.ts` with your backend URL:
+
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api',
+  culqiPublicKey: 'pk_test_your_key'
+};
+```
+
+## 🔑 Authentication
+
+JWT-based authentication with role-based access control (admin, receptionist, stylist, client).
+
+## 📚 Documentation
+
+See `FRONTEND_MISSING.md` and `FRONTEND_COMPLETION.md` for migration details.
+
+**Built with ❤️ using Angular 18**

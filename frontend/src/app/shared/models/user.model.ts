@@ -16,6 +16,15 @@ export interface RegisterRequest {
   email: string;
   phone: string;
   password: string;
+  role?: string;
+}
+
+export interface UserUpdateRequest {
+  name?: string;
+  email?: string;
+  phone?: string;
+  role?: string;
+  password?: string;
 }
 
 export interface AuthResponse {

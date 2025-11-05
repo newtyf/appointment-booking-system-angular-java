@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { roleGuard } from './core/guards/role.guard';
+import { InsideLayoutComponent } from './shared/components/inside-layout.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,7 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
+    component: InsideLayoutComponent,
     canActivate: [roleGuard(['admin'])],
     children: [
       {
@@ -26,6 +28,7 @@ export const routes: Routes = [
   },
   {
     path: 'receptionist',
+    component: InsideLayoutComponent,
     canActivate: [roleGuard(['receptionist'])],
     children: [
       {
@@ -36,6 +39,7 @@ export const routes: Routes = [
   },
   {
     path: 'stylist',
+    component: InsideLayoutComponent,
     canActivate: [roleGuard(['stylist'])],
     children: [
       {
@@ -46,6 +50,7 @@ export const routes: Routes = [
   },
   {
     path: 'client',
+    component: InsideLayoutComponent,
     canActivate: [roleGuard(['client'])],
     children: [
       {
@@ -53,5 +58,9 @@ export const routes: Routes = [
         loadComponent: () => import('./features/client/dashboard/dashboard.component').then(m => m.DashboardComponent)
       }
     ]
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
